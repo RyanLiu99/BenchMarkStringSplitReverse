@@ -5,11 +5,14 @@
         private const char space = ' ';
         private const int SupportedMaxWords = 200;
 
-        public static Action<char[]?> Print = Console.Write;
-        public static Action<char> PrintChar = Console.Write;
-        public static Action<object?> PrintObject = Console.Write;
-        public static Action WriteEmptyLine = Console.WriteLine;
-        public static Action<string?> WriteStrLine = Console.WriteLine;
+        private static Action<char[]?> Print = Console.Write;
+        private static Action<char> PrintChar = Console.Write;
+        private static Action<object?> PrintObject = Console.Write;
+        private static Action WriteEmptyLine = Console.WriteLine;
+        private static Action<string?> WriteStrLine = Console.WriteLine;
+
+        private static Range[] Ranges = new Range[SupportedMaxWords];
+      
 
         public static void NullActions()
         {
@@ -27,11 +30,11 @@
 
         public static void SpanRangeVersion(string input)
         {
-            ReadOnlySpan<char> seperator = new ReadOnlySpan<char>(new[] { space });
+            ReadOnlySpan<char> separator = new ReadOnlySpan<char>(new[] { space });
             ReadOnlySpan<char> span = input.AsMemory().Span;
 
-            Span<Range> ranges = new Span<Range>(new Range[SupportedMaxWords]);
-            int count = span.Split(ranges, seperator, StringSplitOptions.RemoveEmptyEntries);
+            Span<Range> ranges = new Span<Range>(Ranges); //Span<T> cannot be field
+            int count = span.Split(ranges, separator, StringSplitOptions.RemoveEmptyEntries);
 
             for (int c = count - 1; c >= 0; c--)
             {
@@ -58,7 +61,7 @@
                 Print(span.Slice(p + 1).ToArray());
                 span = span.Slice(0, p).Trim();
                 p = span.LastIndexOf(space);
-                if (span.Length > 0) { PrintChar(space); }
+                if (span.Length > 0) { PrintChar(space); }  // Only if there are more words, print separator
             }
 
             if (span.Length > 0) { Print(span.ToArray()); }

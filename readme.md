@@ -1,9 +1,9 @@
 # Run Benchmark 
 
-- First run unit tests make sure it works before measure performance
+- First run [unit tests](SplitStringTest/StringSplitTest1.cs)  make sure it works before measure performance
 - Chose benchmark to run in [Program.cs](BenchMark/Program.cs)
 
-3 implementations under test is in [WaysOfSplitString.cs](SplitStringLib/WaysOfSplitString.cs).
+3 (ineed 4, see below) implementations under test is in [WaysOfSplitString.cs](SplitStringLib/WaysOfSplitString.cs).  
 
 
 # SplitLinesBenchmarkConsoleWrite, write to console.  
@@ -30,6 +30,13 @@ Following result makes more sense now. SpanVersion is still the best. SpanRangeV
 | SpanRangeVersion       | 1,222.3 ns | 23.20 ns | 21.70 ns | 0.3872 |   1.59 KB |
 | SpanVersion            |   687.9 ns | 12.71 ns | 11.27 ns | 0.4702 |   1.92 KB |
 
+
+# SplitLinesBenchmarkNoOp, but in SpanRangeVersion, it reuse Ranges place holder (move Ranges from local var to be static field, so 4th way), make it no allocation at all.
+| Method                 | Mean       | Error    | StdDev   | Gen0   | Allocated |
+|----------------------- |-----------:|---------:|---------:|-------:|----------:|
+| StringSplitJoinVersion | 1,865.9 ns | 36.68 ns | 43.66 ns | 0.9670 |    4048 B |
+| SpanRangeVersion       | 1,228.5 ns | 24.41 ns | 58.95 ns |      - |         - |
+| SpanVersion            |   738.2 ns | 14.74 ns | 28.39 ns | 0.4702 |    1968 B |
 
  # Legends  
 

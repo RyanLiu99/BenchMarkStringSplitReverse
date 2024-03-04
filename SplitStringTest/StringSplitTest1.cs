@@ -23,7 +23,6 @@ namespace SplitStringTest
             TestImp(WaysOfSplitString.SpanVersion);
         }
 
-
         private void TestImp(Action<string> imp)
         {
             StringWriter consoleOut = new StringWriter();

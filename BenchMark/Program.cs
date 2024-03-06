@@ -7,7 +7,7 @@ public class Program
 
     public static void Main(string[] args)
     {      
-        //BenchmarkRunner.Run<SplitLinesBenchmarkConsoleWrite>();
+        BenchmarkRunner.Run<SplitLinesBenchmarkConsoleWrite>();
         BenchmarkRunner.Run<SplitLinesBenchmarkNoOp>();
     }
 }

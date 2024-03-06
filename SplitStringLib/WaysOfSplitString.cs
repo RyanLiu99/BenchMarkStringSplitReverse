@@ -39,12 +39,13 @@
             for (int c = count - 1; c >= 0; c--)
             {
                 var range = ranges[c];
-                for (var pos = range.Start.Value; pos < range.End.Value; pos++)
-                {
-                    PrintChar(span[pos]);
-                }
+                // for (var pos = range.Start.Value; pos < range.End.Value; pos++)
+                // {
+                //     PrintChar(span[pos]);
+                // }
+                Print(span.Slice(range.Start.Value, range.End.Value - range.Start.Value).ToArray());
 
-                if (c == 0)
+                if (c == 0) // last word
                     WriteEmptyLine();
                 else
                     PrintChar(space);
@@ -59,7 +60,7 @@
             while (p != -1)
             {
                 Print(span.Slice(p + 1).ToArray());
-                span = span.Slice(0, p).Trim();
+                span = span.Slice(0, p).Trim(); // in case there are multiple spaces
                 p = span.LastIndexOf(space);
                 if (span.Length > 0) { PrintChar(space); }  // Only if there are more words, print separator
             }
